@@ -1,0 +1,20 @@
+{
+  "name": "gql_education",
+  "version": "1.0.0",
+  "description": "education project of graphql",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "education",
+    "graphql"
+  ],
+  "author": "tetsuya-zama",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.13.0",
+    "dataloader": "^2.0.0",
+    "graphql": "^15.0.0"
+  }
+}
