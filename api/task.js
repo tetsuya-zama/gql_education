@@ -7,7 +7,7 @@ let tasks = [
   },
   {
     id:2,
-    name: "DataLoaderを試す",
+    name: "ApolloServerのサンプルを作る",
     done: true,
     tagIds: [2,3]
   },
@@ -19,7 +19,7 @@ let tasks = [
   },
   {
     id:4,
-    name:"ApolloServerのn+1問題を検証する",
+    name:"GraphQLの勉強会をする",
     done: false,
     tagIds: [2,3]
   },
