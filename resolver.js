@@ -44,6 +44,26 @@ module.exports.createDataSources = () =>{
 };
 
 /**
+* Resolver用共通関数
+*/
+
+/**
+* 未登録のタグを追加登録する
+* @param {array} tagNames 登録対象のタグ名の配列
+* @param {object} tagNameLoader nameをkeyにタグを参照するDataLoader
+* @param {object} tagApi タグ用API
+*/
+const registerNewTags = async (tagNames, tagNameLoader, tagApi) =>{
+  for(tagName of tagNames){
+    const existTag = await tagNameLoader.load(tagName);
+    if(!existTag){
+      tagApi.add(tagName);
+      await tagNameLoader.clear(tagName);
+    }
+  }
+}
+
+/**
 * GraphQLのresolver
 * 第１引数 親ノードが解決した結果
 * 第２引数 引数として与えられたパラメータ
@@ -83,17 +103,10 @@ module.exports.resolvers = {
     * タスクを作成する
     */
     taskNew: async(_, {name, tagNames}, {dataSources}) => {
-      for(tagName of tagNames){
-        const existTag = await dataSources.tagNameLoader.load(tagName);
-        if(!existTag){
-          dataSources.tagApi.add(tagName);
-          await dataSources.tagNameLoader.clear(tagName);
-        }
-      }
+      await registerNewTags(tagNames, dataSources.tagNameLoader, dataSources.tagApi);
 
       const tags = await dataSources.tagNameLoader.loadMany(tagNames)
       const tagIds = tags.map(tag => tag.id);
-
 
       try{
         const result = dataSources.taskApi.put({
@@ -116,13 +129,7 @@ module.exports.resolvers = {
 
       if(!targetTask) return {error: {message:`Task:${id} does not exist`}};
 
-      for(tagName of tagNames){
-        const existTag = await dataSources.tagNameLoader.load(tagName);
-        if(!existTag){
-          dataSources.tagApi.add(tagName);
-          await dataSources.tagNameLoader.clear(tagName);
-        }
-      }
+      await registerNewTags(tagNames, dataSources.tagNameLoader, dataSources.tagApi);
 
       const tags = await dataSources.tagNameLoader.loadMany(tagNames)
       const tagIds = tags.map(tag => tag.id);
