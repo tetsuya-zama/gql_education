@@ -1,6 +1,6 @@
 {
   "name": "gql_education",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "education project of graphql",
   "main": "index.js",
   "scripts": {
