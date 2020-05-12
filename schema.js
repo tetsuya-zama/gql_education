@@ -1,5 +1,8 @@
 const {gql} = require("apollo-server");
 
+/**
+* GraphQLのスキーマ定義
+*/
 module.exports.typeDefs = gql`
 """
 タグ
